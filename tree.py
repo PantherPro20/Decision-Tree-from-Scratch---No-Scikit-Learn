@@ -3,8 +3,8 @@ import numpy as np
 
 
 class Node:
-    def __init__(self, features=None, threshold=None, left=None, right=None, value=None):
-        self.features = features
+    def __init__(self, split_idx=None, threshold=None, left=None, right=None, value=None):
+        self.split_idx = split_idx
         self.threshold= threshold
         self.left=left
         self.right=right
@@ -17,9 +17,9 @@ class Node:
 
 
 class DecisionTree:
-    def __init__(self, max_depth=5, min_samples=10):
+    def __init__(self, max_depth=5, min_samples_split=10):
         self.max_depth=max_depth
-        self.min_samples=min_samples
+        self.min_samples_split=min_samples_split
 
     def _gini_impurity(self, y):
         n_samples = len(y)
