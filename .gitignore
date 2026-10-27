@@ -14,3 +14,7 @@ crash.log
 
 # For built boxes
 *.box
+my_submission.csv
+
+__pycache__/
+
