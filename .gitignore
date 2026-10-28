@@ -16,5 +16,5 @@ crash.log
 *.box
 my_submission.csv
 
-__pycache__/*
+__pycache__/tree.cpython-314.pyc
 
