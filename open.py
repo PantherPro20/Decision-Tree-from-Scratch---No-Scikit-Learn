@@ -2,8 +2,13 @@ import pandas as pd
 import numpy as np
 from tree import DecisionTree
 
+
+
 train_data = pd.read_csv('data/train.csv')
 test_data = pd.read_csv('data/test.csv')
+
+train_data = train_data.dropna()
+test_data = test_data.dropna()
 
 print(f"Loaded train data shape: {train_data.shape}")
 print(f"Loaded test data shape: {test_data.shape}")

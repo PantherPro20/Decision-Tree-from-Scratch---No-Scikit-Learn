@@ -20,3 +20,5 @@ __pycache__/
 *.pyc
 
 
+dist/decisiontree_no_scikit_learn-0.1.0-py3-none-any.whl
+dist/decisiontree_no_scikit_learn-0.1.0.tar.gz
