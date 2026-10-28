@@ -5,6 +5,9 @@ from tree import DecisionTree
 train_data = pd.read_csv('data/train.csv')
 test_data = pd.read_csv('data/test.csv')
 
+print(f"Loaded train data shape: {train_data.shape}")
+print(f"Loaded test data shape: {test_data.shape}")
+
 if 'age' in train_data.columns:
     train_data['age'] = train_data['age'] / 365.25
 if 'age' in test_data.columns:
@@ -29,6 +32,8 @@ best_config = {
     'features': base_features
 }
 
+print("\n--- Running Feature Drop & Exhaustive Grid Search ---")
+
 for col_to_drop in base_features:
     current_features = [f for f in base_features if f != col_to_drop]
     
@@ -52,7 +57,16 @@ for col_to_drop in base_features:
                     'min_samples_split': min_samples,
                     'features': current_features
                 }
+                print(f"New Best! Dropped '{col_to_drop}' | depth={depth}, min_samples={min_samples} -> Accuracy: {accuracy:.2f}%")
 
+print(f"\nOptimization Complete!")
+print(f"Best Configuration Found:")
+print(f"  - Column to Drop: {best_config['dropped_column']}")
+print(f"  - Max Depth: {best_config['max_depth']}")
+print(f"  - Min Samples Split: {best_config['min_samples_split']}")
+print(f"  - Best Validation Accuracy: {best_accuracy:.2f}%\n")
+
+print("Training final model on full training set using best configuration...")
 X_full_best = train_data[best_config['features']].to_numpy()
 
 final_tree = DecisionTree(
@@ -60,7 +74,9 @@ final_tree = DecisionTree(
     min_samples_split=best_config['min_samples_split']
 )
 final_tree.fit(X_full_best, y)
+print("Training complete!")
 
+print("Generating predictions for test.csv...")
 X_test = test_data[best_config['features']].to_numpy()
 predictions = final_tree.predict(X_test)
 
@@ -75,3 +91,4 @@ submission = pd.DataFrame({
 })
 
 submission.to_csv('my_submission.csv', index=False)
+print("Saved predictions to my_submission.csv with 'cardio' column!")
